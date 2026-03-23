@@ -3,7 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Socials</title>
+  <title>Mike's Gospel — Links</title>
+  <!-- Replace og:url when you have a public URL (Discord/embeds need absolute links) -->
+  <meta name="description" content="Mike's Gospel — Instagram @mikes.gospel · @shrimp.ur · @osulifts · Twitch shrimpur · X @Mikes_Gospel · TikTok @mikes.gospel">
+  <meta property="og:title" content="Mike's Gospel — Links">
+  <meta property="og:description" content="Instagram @mikes.gospel (personal) · @shrimp.ur (clips) · @osulifts (lifting) · Twitch shrimpur · X @Mikes_Gospel · TikTok @mikes.gospel">
+  <meta property="og:image" content="https://static-cdn.jtvnw.net/jtv_user_pictures/b3b01984-7688-4162-b898-1834ea89f162-profile_image-70x70.png">
+  <meta property="og:image:secure_url" content="https://static-cdn.jtvnw.net/jtv_user_pictures/b3b01984-7688-4162-b898-1834ea89f162-profile_image-70x70.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="70">
+  <meta property="og:image:height" content="70">
+  <meta property="og:image:alt" content="Mike's Gospel — profile">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Mike's Gospel">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Mike's Gospel — Links">
+  <meta name="twitter:description" content="Instagram @mikes.gospel · @shrimp.ur · @osulifts · Twitch shrimpur · X @Mikes_Gospel · TikTok @mikes.gospel">
+  <meta name="twitter:image" content="https://static-cdn.jtvnw.net/jtv_user_pictures/b3b01984-7688-4162-b898-1834ea89f162-profile_image-70x70.png">
+  <meta name="theme-color" content="#120805">
   <link rel="icon" href="https://static-cdn.jtvnw.net/jtv_user_pictures/b3b01984-7688-4162-b898-1834ea89f162-profile_image-70x70.png" sizes="70x70" type="image/png">
   <link rel="apple-touch-icon" href="https://static-cdn.jtvnw.net/jtv_user_pictures/b3b01984-7688-4162-b898-1834ea89f162-profile_image-70x70.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,6 +46,16 @@
       --ease-exit: cubic-bezier(0.4, 0, 0.2, 1);
       --twitch: #9146ff;
       --twitch-glow: rgba(145, 70, 255, 0.35);
+      /* Charizard palette — ember + wing accent */
+      --char-ember: #ff5722;
+      --char-blaze: #ff9800;
+      --char-gold: #ffcc4d;
+      /* Title gradient — soft orange instead of white */
+      --title-orange-soft: #ffd4b8;
+      --title-orange-bright: #fff0d4;
+      --char-wing: #7c9cff;
+      --char-slate: #1a0e0a;
+      --card-glass: linear-gradient(145deg, rgba(32, 14, 8, 0.78) 0%, rgba(12, 5, 3, 0.88) 100%);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -75,8 +103,18 @@
     }
 
     .poke-throw-track {
-      animation: pokeThrow 0.95s cubic-bezier(0.25, 0.82, 0.38, 1) forwards;
       transform-origin: center center;
+      /* Throw, then snap hidden on flash peak (game-style — ball doesn’t linger) */
+      animation:
+        pokeThrow 0.95s cubic-bezier(0.25, 0.82, 0.38, 1) forwards,
+        pokeVanish 0.06s linear 1.36s forwards;
+    }
+
+    @keyframes pokeVanish {
+      to {
+        opacity: 0;
+        visibility: hidden;
+      }
     }
 
     @keyframes pokeThrow {
@@ -136,14 +174,14 @@
     @keyframes pokeOpenTop {
       to {
         transform: translateY(-108%) rotate(-14deg);
-        opacity: 0.92;
+        opacity: 1;
       }
     }
 
     @keyframes pokeOpenBot {
       to {
         transform: translateY(108%) rotate(14deg);
-        opacity: 0.92;
+        opacity: 1;
       }
     }
 
@@ -179,7 +217,7 @@
         0 4px 14px rgba(0, 0, 0, 0.45);
       z-index: 6;
       background: #1a0a06;
-      animation: pokeFaceRelease 0.55s var(--md-emphasized-decel) 1.02s forwards;
+      /* Face hides with parent pokeVanish — no slow shrink */
     }
 
     .poke-center-avatar img {
@@ -187,13 +225,6 @@
       height: 100%;
       object-fit: cover;
       display: block;
-    }
-
-    @keyframes pokeFaceRelease {
-      to {
-        opacity: 0;
-        transform: scale(0.35);
-      }
     }
 
     .poke-glare {
@@ -213,7 +244,7 @@
       to { opacity: 0; }
     }
 
-    /* White burst — classic “release” flash */
+    /* White burst — snappy peak, then gone (matches game cadence) */
     .intro-burst-flash {
       position: absolute;
       inset: 0;
@@ -226,13 +257,13 @@
       );
       opacity: 0;
       transform: scale(0.4);
-      animation: burstFlash 0.5s var(--ease-exit) 1.18s forwards;
+      animation: burstFlash 0.36s cubic-bezier(0.4, 0, 0.2, 1) 1.14s forwards;
     }
 
     @keyframes burstFlash {
-      0% { opacity: 0; }
-      35% { opacity: 1; transform: scale(1.05); }
-      100% { opacity: 0; transform: scale(1.5); }
+      0% { opacity: 0; transform: scale(0.35); }
+      45% { opacity: 1; transform: scale(1.04); }
+      100% { opacity: 0; transform: scale(1.45); }
     }
 
     .intro-tagline {
@@ -272,7 +303,6 @@
       .poke-half--top,
       .poke-half--bottom,
       .poke-mid,
-      .poke-center-avatar,
       .poke-glare,
       .intro-burst-flash,
       .intro-tagline { animation: none !important; }
@@ -306,12 +336,29 @@
       .stage { opacity: 1; transform: none; filter: none; }
     }
 
-    /* Background — flat gradient only (no orange oval blobs) */
+    /* Background — Charizard art + tint (noise / vignette / embers stay on top in DOM) */
     .fire-bg {
       position: fixed;
       inset: 0;
       z-index: 0;
-      background: linear-gradient(180deg, #080402 0%, var(--bg-mid) 48%, #160a06 100%);
+      background-color: var(--bg-deep);
+      background-image: url('char.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .fire-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(
+        180deg,
+        rgba(5, 2, 1, 0.78) 0%,
+        rgba(14, 6, 4, 0.62) 45%,
+        rgba(6, 2, 1, 0.76) 100%
+      );
     }
 
     .embers {
@@ -391,12 +438,12 @@
     .poke-badge::before {
       content: '';
       position: absolute;
-      inset: -10px;
+      inset: -5px;
       border-radius: 50%;
       background: conic-gradient(from 200deg, var(--flame-edge), var(--flame-hot), var(--flame-core), var(--flame-hot), var(--flame-edge));
       animation: spin 8s linear infinite;
       opacity: 0.82;
-      filter: blur(3px);
+      filter: blur(2px);
     }
 
     @keyframes spin {
@@ -414,8 +461,8 @@
       justify-content: center;
       overflow: hidden;
       box-shadow:
-        inset 0 0 28px rgba(255, 100, 30, 0.28),
-        0 0 44px rgba(255, 80, 20, 0.38);
+        inset 0 0 22px rgba(255, 100, 30, 0.28),
+        0 0 22px rgba(255, 80, 20, 0.34);
     }
 
     .poke-inner img {
@@ -426,17 +473,51 @@
       display: block;
     }
 
+    @keyframes titleFireGradient {
+      0% {
+        background-position: 0% 50%;
+      }
+      100% {
+        background-position: 100% 50%;
+      }
+    }
+
     h1 {
       font-family: 'Orbitron', sans-serif;
       font-weight: 900;
       font-size: clamp(1.35rem, 5vw, 1.8rem);
       letter-spacing: 0.06em;
       text-transform: uppercase;
-      background: linear-gradient(135deg, #fff 0%, var(--flame-core) 45%, var(--flame-hot) 100%);
+      background-image: linear-gradient(
+        105deg,
+        var(--title-orange-soft) 0%,
+        var(--title-orange-bright) 12%,
+        var(--flame-core) 24%,
+        var(--char-gold) 36%,
+        var(--flame-hot) 48%,
+        var(--flame-edge) 56%,
+        var(--flame-hot) 64%,
+        var(--char-gold) 76%,
+        var(--flame-core) 88%,
+        var(--title-orange-bright) 96%,
+        var(--title-orange-soft) 100%
+      );
+      background-size: 280% 100%;
+      background-repeat: no-repeat;
+      animation: titleFireGradient 8s ease-in-out infinite alternate;
       -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
       background-clip: text;
-      filter: drop-shadow(0 0 20px rgba(255, 100, 40, 0.5));
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      filter: drop-shadow(0 0 16px rgba(255, 100, 40, 0.45));
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      h1 {
+        animation: none;
+        background-image: linear-gradient(135deg, var(--title-orange-bright) 0%, var(--flame-core) 45%, var(--flame-hot) 100%);
+        background-size: 100% 100%;
+      }
     }
 
     .subtitle {
@@ -452,53 +533,83 @@
       font-weight: 700;
     }
 
-    .links {
+    .links-section-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: rgba(255, 180, 100, 0.42);
+      margin-bottom: 0.75rem;
+      text-align: center;
       width: 100%;
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0.65rem;
-      align-items: stretch;
     }
 
-    @media (max-width: 400px) {
-      .links {
-        grid-template-columns: 1fr;
-      }
+    .links-section-title span {
+      color: var(--char-wing);
+    }
+
+    .links {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      align-items: stretch;
     }
 
     .link-card {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       align-items: center;
       justify-content: flex-start;
-      text-align: center;
-      gap: 0.45rem;
-      min-height: 100%;
-      padding: 0.85rem 0.65rem 0.95rem;
-      background: var(--card);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border: 1px solid var(--card-border);
-      border-radius: 14px;
+      text-align: left;
+      gap: 0.65rem;
+      min-height: 0;
+      padding: 0.42rem 0.65rem 0.42rem 0.5rem;
+      background: var(--card-glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 100, 50, 0.16);
+      border-radius: 10px;
       text-decoration: none;
       color: var(--text);
       transition:
         transform 0.35s var(--ease),
-        border-color 0.35s,
-        box-shadow 0.35s,
-        background 0.35s;
+        border-color 0.3s,
+        box-shadow 0.35s;
       animation: cardIn 0.7s var(--ease) both;
       position: relative;
       overflow: hidden;
+      box-shadow:
+        0 2px 12px rgba(0, 0, 0, 0.28),
+        inset 0 1px 0 rgba(255, 220, 160, 0.05);
+    }
+
+    .link-card::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      border-radius: 10px 0 0 10px;
+      background: linear-gradient(
+        180deg,
+        var(--char-gold) 0%,
+        var(--char-blaze) 45%,
+        var(--char-ember) 100%
+      );
+      opacity: 0.85;
     }
 
     .link-card::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(90deg, transparent, rgba(255, 120, 40, 0.09), transparent);
+      background: linear-gradient(105deg, transparent 35%, rgba(255, 140, 60, 0.05) 50%, transparent 65%);
       transform: translateX(-100%);
-      transition: transform 0.65s var(--ease);
+      transition: transform 0.75s var(--ease);
+      pointer-events: none;
     }
 
     .link-card:hover::after {
@@ -506,11 +617,16 @@
     }
 
     .link-card:hover {
-      transform: translateY(-2px) scale(1.015);
-      border-color: rgba(255, 160, 80, 0.65);
+      transform: translateY(-2px);
+      border-color: rgba(255, 150, 80, 0.35);
       box-shadow:
-        0 14px 42px rgba(255, 60, 0, 0.22),
-        0 0 0 1px rgba(255, 200, 100, 0.12);
+        0 10px 28px rgba(255, 50, 0, 0.12),
+        0 0 0 1px rgba(255, 200, 100, 0.08);
+    }
+
+    .link-card:focus-visible {
+      outline: 2px solid var(--char-gold);
+      outline-offset: 2px;
     }
 
     @keyframes cardIn {
@@ -535,67 +651,107 @@
     }
 
     .icon-wrap {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      background: linear-gradient(145deg, rgba(255, 100, 40, 0.22), rgba(40, 15, 8, 0.92));
-      border: 1px solid rgba(255, 140, 60, 0.35);
-      box-shadow: 0 0 20px rgba(255, 80, 30, 0.12);
+      background: radial-gradient(circle at 30% 25%, rgba(255, 200, 100, 0.12) 0%, transparent 55%),
+        linear-gradient(155deg, rgba(45, 20, 12, 0.92) 0%, rgba(14, 6, 4, 0.96) 100%);
+      border: 1px solid rgba(255, 130, 70, 0.22);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      transition: transform 0.3s var(--ease), border-color 0.3s;
+    }
+
+    .link-card:hover .icon-wrap {
+      transform: scale(1.04);
     }
 
     .icon-wrap svg {
-      width: 22px;
-      height: 22px;
+      width: 18px;
+      height: 18px;
       fill: currentColor;
     }
 
-    .ig { color: #ff6b9d; }
-    .ig2 { color: #ffa726; }
-    .twitch { color: var(--twitch); box-shadow: 0 0 22px var(--twitch-glow); }
-    .ig3 { color: #66bb6a; }
-    .tw { color: #e7e9ea; }
-    .tt { color: #00f2ea; }
+    .ig {
+      color: #ff7eb3;
+      border-color: rgba(255, 120, 160, 0.35);
+    }
+    .ig2 {
+      color: #ffb74d;
+      border-color: rgba(255, 180, 90, 0.35);
+    }
+    .twitch {
+      color: var(--twitch);
+      border-color: rgba(145, 70, 255, 0.45);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 0 20px var(--twitch-glow);
+    }
+    .ig3 {
+      color: #81c784;
+      border-color: rgba(120, 200, 140, 0.35);
+    }
+    .tw {
+      color: #e7e9ea;
+      border-color: rgba(200, 210, 220, 0.25);
+    }
+    .tt {
+      color: #5ee8e0;
+      border-color: rgba(80, 230, 220, 0.35);
+    }
 
     .link-text {
       flex: 1;
       min-width: 0;
-      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0.02rem;
+      justify-content: center;
     }
 
     .link-label {
       font-family: 'Orbitron', sans-serif;
-      font-size: 0.62rem;
+      font-size: 0.52rem;
       font-weight: 700;
-      letter-spacing: 0.1em;
-      color: var(--flame-core);
+      letter-spacing: 0.14em;
+      color: rgba(255, 190, 110, 0.48);
       text-transform: uppercase;
-      margin-bottom: 0.08rem;
+      line-height: 1.2;
     }
 
     .link-handle {
-      font-size: 0.95rem;
-      font-weight: 600;
+      font-size: 0.92rem;
+      font-weight: 700;
       color: var(--text);
-      line-height: 1.25;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
+      line-height: 1.15;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
       overflow: hidden;
-      word-break: break-word;
+      text-overflow: ellipsis;
     }
 
     .link-meta {
-      font-size: 0.72rem;
-      color: var(--text-dim);
-      margin-top: 0.12rem;
+      font-size: 0.58rem;
+      font-weight: 600;
+      color: rgba(255, 200, 170, 0.36);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      line-height: 1.2;
     }
 
     .chev {
-      display: none;
+      flex-shrink: 0;
+      font-size: 1.1rem;
+      font-weight: 300;
+      line-height: 1;
+      color: rgba(255, 200, 140, 0.22);
+      transition: color 0.25s, transform 0.3s var(--ease);
+    }
+
+    .link-card:hover .chev {
+      color: rgba(255, 200, 100, 0.45);
+      transform: translateX(2px);
     }
 
     footer {
@@ -608,96 +764,89 @@
       text-transform: uppercase;
     }
 
-    .audio-ctrl {
-      position: fixed;
-      bottom: 1.25rem;
-      left: 1.25rem;
-      z-index: 50;
+    /* trag.html-style: volume row (no separate play button — click page to start) */
+    .utils {
+      width: 100%;
       display: flex;
+      justify-content: center;
       align-items: center;
-      gap: 0.6rem;
-      padding: 0.5rem 0.85rem;
-      background: rgba(18, 8, 4, 0.94);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 100, 40, 0.35);
-      border-radius: 10px;
-      box-shadow: 0 0 28px rgba(255, 60, 0, 0.2);
+      margin-top: 0.75rem;
+      padding-top: 0.85rem;
+      border-top: 1px solid rgba(255, 100, 50, 0.12);
       opacity: 0;
       transform: translateY(8px);
       transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
     }
 
-    body.intro-done .audio-ctrl {
+    body.intro-done .utils {
       opacity: 1;
       transform: translateY(0);
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .audio-ctrl { opacity: 1; transform: none; }
+      .utils { opacity: 1; transform: none; }
     }
 
-    .play-btn {
-      width: 34px;
-      height: 34px;
+    .player {
       display: flex;
       align-items: center;
-      justify-content: center;
-      background: rgba(40, 18, 10, 0.9);
-      border: 1px solid rgba(255, 120, 50, 0.4);
-      border-radius: 8px;
-      color: var(--flame-core);
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.3s;
+      gap: 0.5rem;
+      background: transparent;
     }
 
-    .play-btn:hover {
-      box-shadow: 0 0 18px rgba(255, 120, 40, 0.45);
-      transform: scale(1.06);
+    .volume {
+      width: min(200px, 88vw);
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.35rem 0.5rem;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 120, 50, 0.12);
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.15));
     }
 
-    .play-btn svg { width: 15px; height: 15px; }
-
-    .play-btn .icon-pause { display: none; }
-    .play-btn .icon-play { display: block; }
-    .play-btn:not(.paused) .icon-pause { display: block; }
-    .play-btn:not(.paused) .icon-play { display: none; }
-
-    .vol-wrap { display: flex; align-items: center; gap: 0.45rem; }
-    .vol-wrap span {
-      font-size: 0.65rem;
-      color: rgba(255, 180, 120, 0.55);
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      font-family: 'Orbitron', sans-serif;
-    }
-
-    .vol-slider {
+    .volume input[type="range"] {
       -webkit-appearance: none;
       appearance: none;
-      width: 88px;
+      flex: 1;
+      min-width: 0;
       height: 4px;
-      background: rgba(60, 25, 15, 0.9);
-      border-radius: 2px;
+      background: linear-gradient(
+        90deg,
+        var(--flame-hot) 0%,
+        rgba(255, 120, 40, 0.45) 60%,
+        rgba(255, 255, 255, 0.08) 100%
+      );
+      border-radius: 6px;
       outline: none;
     }
 
-    .vol-slider::-webkit-slider-thumb {
+    .volume input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
       width: 12px;
       height: 12px;
-      background: linear-gradient(135deg, var(--flame-core), var(--flame-hot));
-      border-radius: 3px;
+      border-radius: 10px;
+      background: var(--flame-core);
+      box-shadow: 0 2px 8px rgba(255, 120, 40, 0.45);
+      border: 2px solid rgba(0, 0, 0, 0.5);
       cursor: pointer;
-      box-shadow: 0 0 10px rgba(255, 140, 40, 0.6);
     }
 
-    .vol-slider::-moz-range-thumb {
+    .volume input[type="range"]::-moz-range-thumb {
       width: 12px;
       height: 12px;
-      background: linear-gradient(135deg, var(--flame-core), var(--flame-hot));
-      border-radius: 3px;
+      border-radius: 10px;
+      background: var(--flame-core);
+      border: 2px solid rgba(0, 0, 0, 0.5);
       cursor: pointer;
-      border: none;
+    }
+
+    .vol-label {
+      font-size: 0.65rem;
+      font-family: 'Orbitron', sans-serif;
+      color: rgba(255, 200, 160, 0.55);
+      min-width: 2.25rem;
+      text-align: right;
     }
 
     .hint {
@@ -727,7 +876,7 @@
   <!-- Opening: throw → Pokéball opens → flash (links reveal after) — vibe: simeydotme-style sprite motion -->
   <div class="intro" id="pageIntro" aria-hidden="true">
     <div class="intro-scrim" aria-hidden="true"></div>
-    <p class="intro-tagline">I choose you</p>
+    <p class="intro-tagline"></p>
     <div class="intro-poke-wrap">
       <div class="poke-throw-track">
         <div class="pokeball" aria-hidden="true">
@@ -756,8 +905,6 @@
   <div class="vignette" aria-hidden="true"></div>
   <div class="embers" id="embers" aria-hidden="true"></div>
 
-  <audio id="bgmusic" preload="auto" playsinline loop></audio>
-
   <div class="wrap stage" id="mainStage">
     <header class="brand">
       <div class="poke-badge">
@@ -775,6 +922,8 @@
       <h1>Shrimpur</h1>
       <p class="subtitle">Mike · <span>#001</span> Fire</p>
     </header>
+
+    <p class="links-section-title">All My<span>links</span></p>
 
     <nav class="links" aria-label="Social links">
       <a class="link-card" href="https://www.instagram.com/mikes.gospel/" target="_blank" rel="noopener noreferrer">
@@ -801,18 +950,6 @@
         <span class="chev" aria-hidden="true">›</span>
       </a>
 
-      <a class="link-card" href="https://www.twitch.tv/shrimpur" target="_blank" rel="noopener noreferrer">
-        <div class="icon-wrap twitch" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z"/></svg>
-        </div>
-        <div class="link-text">
-          <div class="link-label">Twitch</div>
-          <div class="link-handle">shrimpur</div>
-          <div class="link-meta">Live streams</div>
-        </div>
-        <span class="chev" aria-hidden="true">›</span>
-      </a>
-
       <a class="link-card" href="https://www.instagram.com/osulifts/" target="_blank" rel="noopener noreferrer">
         <div class="icon-wrap ig3" aria-hidden="true">
           <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.07-1.28.072-1.689.072-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
@@ -821,6 +958,18 @@
           <div class="link-label">Instagram</div>
           <div class="link-handle">@osulifts</div>
           <div class="link-meta">Lifting</div>
+        </div>
+        <span class="chev" aria-hidden="true">›</span>
+      </a>
+
+      <a class="link-card" href="https://www.twitch.tv/shrimpur" target="_blank" rel="noopener noreferrer">
+        <div class="icon-wrap twitch" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z"/></svg>
+        </div>
+        <div class="link-text">
+          <div class="link-label">Twitch</div>
+          <div class="link-handle">shrimpur</div>
+          <div class="link-meta">Live streams</div>
         </div>
         <span class="chev" aria-hidden="true">›</span>
       </a>
@@ -850,21 +999,25 @@
       </a>
     </nav>
 
+    <div class="utils" aria-label="Audio controls">
+      <div class="player" aria-label="Background music">
+        <audio id="bg-audio" preload="auto" playsinline loop>
+          Your browser does not support the audio element.
+        </audio>
+        <div class="volume" title="Set volume">
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="var(--flame-hot)" d="M3 10v4h4l5 4V6L7 10H3z"/>
+          </svg>
+          <input id="volumeSlider" aria-label="Volume" type="range" min="0" max="1" step="0.01" value="0.32"/>
+          <div id="volLabel" class="vol-label">32%</div>
+        </div>
+      </div>
+    </div>
+
     <footer>Cooked by · Crownedapex</footer>
   </div>
 
   <p class="hint" id="tapHint"></p>
-
-  <div class="audio-ctrl">
-    <button type="button" class="play-btn paused" id="playbtn" title="Play / Pause" aria-label="Play or pause background music">
-      <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-      <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-    </button>
-    <div class="vol-wrap">
-      <span>Vol</span>
-      <input type="range" class="vol-slider" id="vol" min="0" max="100" value="40" title="Volume" aria-label="Music volume">
-    </div>
-  </div>
 
   <script>
     (function embers() {
@@ -913,111 +1066,151 @@
             intro.remove();
             finishIntro();
           }
-        }, 3000);
+        }, 2200);
       } else {
         finishIntro();
       }
     })();
 
-    const audio = document.getElementById('bgmusic');
-    const playBtn = document.getElementById('playbtn');
-    const volSlider = document.getElementById('vol');
     const tapHint = document.getElementById('tapHint');
 
-    const CANDIDATES = [
-      { url: 'https://r2.guns.lol/7fdd2ffd-dcaa-41d0-93b1-5e4bc914206d.mp3', type: 'audio/mpeg' },
-      { url: 'https://r2.guns.lol/97f40c6a-2261-4e77-8961-927cb56957e5.mp3', type: 'audio/mpeg' },
-    ];
+    /* Background audio — same pattern as trag.html: click page to start, m.mp3 next to this file */
+    (function audioPlayer() {
+      const audio = document.getElementById('bg-audio');
+      const volumeSlider = document.getElementById('volumeSlider');
+      const volLabel = document.getElementById('volLabel');
 
-    function setAudioSrc(url) {
-      audio.querySelectorAll('source').forEach(s => s.remove());
-      audio.src = url;
-      try { audio.load(); } catch (e) {}
-    }
+      const CANDIDATES = [{ url: 'm.mp3', type: 'audio/mpeg' }];
 
-    function mimeSupported(mime) {
-      try {
-        const r = audio.canPlayType(mime);
-        return r === 'probably' || r === 'maybe';
-      } catch (e) { return false; }
-    }
+      audio.loop = true;
+      audio.preload = 'auto';
 
-    async function findAndLoadSources() {
-      const loaded = [];
-      for (const c of CANDIDATES) {
-        if (!c || !c.url) continue;
-        if (!mimeSupported(c.type)) continue;
-        let ok = true;
-        try {
-          const res = await fetch(c.url, { method: 'HEAD', cache: 'no-cache' });
-          if (!res.ok) ok = false;
-        } catch (err) {}
-        if (!ok) continue;
-        loaded.push(c.url);
+      function showToast(msg, t) {
+        t = t || 2800;
+        var el = document.getElementById('bio-toast');
+        if (!el) {
+          el = document.createElement('div');
+          el.id = 'bio-toast';
+          el.setAttribute('role', 'status');
+          el.style.cssText =
+            'position:fixed;bottom:32px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.78);border:1px solid rgba(255,120,40,0.2);color:var(--flame-core);padding:8px 14px;border-radius:10px;z-index:9999;font-size:12px;max-width:90vw;text-align:center;transition:opacity .3s';
+          document.body.appendChild(el);
+        }
+        el.textContent = msg;
+        el.style.opacity = '1';
+        setTimeout(function () {
+          el.style.opacity = '0';
+        }, t);
       }
-      return loaded;
-    }
 
-    let audioLoaded = false;
-    async function playFromUserGesture() {
-      if (audioLoaded && audio.src) {
+      function setVolume(v) {
+        audio.volume = v;
+        if (volLabel) volLabel.textContent = Math.round(v * 100) + '%';
+        audio.muted = false;
+      }
+
+      if (volumeSlider) {
+        setVolume(parseFloat(volumeSlider.value || 0.32));
+        volumeSlider.addEventListener('input', function (e) {
+          setVolume(parseFloat(e.target.value));
+        });
+      }
+
+      function mimeSupported(mime) {
         try {
+          var r = audio.canPlayType(mime);
+          return r === 'probably' || r === 'maybe';
+        } catch (e) {
+          return false;
+        }
+      }
+
+      function setAudioSrc(url) {
+        Array.from(audio.querySelectorAll('source')).forEach(function (s) {
+          s.remove();
+        });
+        audio.src = url;
+        try {
+          audio.load();
+        } catch (e) {}
+      }
+
+      async function findAndLoadSources() {
+        var loaded = [];
+        for (var i = 0; i < CANDIDATES.length; i++) {
+          var c = CANDIDATES[i];
+          if (!c || !c.url) continue;
+          if (!mimeSupported(c.type)) continue;
+          var use = true;
+          try {
+            var res = await fetch(c.url, { method: 'HEAD', cache: 'no-cache' });
+            if (!res.ok) use = false;
+          } catch (err) {
+            use = true;
+          }
+          if (use) loaded.push(c.url);
+        }
+        if (loaded.length === 0 && mimeSupported('audio/mpeg')) {
+          return ['m.mp3'];
+        }
+        return loaded;
+      }
+
+      async function playFromUserGesture() {
+        try {
+          var chosen = await findAndLoadSources();
+          if (!chosen || chosen.length === 0) {
+            showToast('Add m.mp3 next to this HTML file.', 4000);
+            return false;
+          }
+          setAudioSrc(chosen[0]);
+          audio.muted = false;
           await audio.play();
-          playBtn.classList.remove('paused');
           if (tapHint) tapHint.style.display = 'none';
           return true;
-        } catch (e) { return false; }
+        } catch (err) {
+          showToast('Playback failed — try again', 3000);
+          return false;
+        }
       }
-      try {
-        const chosen = await findAndLoadSources();
-        if (!chosen || chosen.length === 0) return false;
-        setAudioSrc(chosen[0]);
-        audioLoaded = true;
-        await audio.play();
-        playBtn.classList.remove('paused');
-        if (tapHint) tapHint.style.display = 'none';
-        return true;
-      } catch (err) {
-        return false;
+
+      var audioUnlocked = false;
+      function unlockAudioOnGesture() {
+        if (audioUnlocked) return;
+        try {
+          var AC = window.AudioContext || window.webkitAudioContext;
+          if (!AC) {
+            audioUnlocked = true;
+            return;
+          }
+          var ctx = new AC();
+          if (ctx.state === 'suspended') ctx.resume();
+          var b = ctx.createBuffer(1, 1, 22050);
+          var src = ctx.createBufferSource();
+          src.buffer = b;
+          src.connect(ctx.destination);
+          src.start(0);
+        } catch (e) {}
+        audioUnlocked = true;
       }
-    }
+      document.body.addEventListener('pointerdown', unlockAudioOnGesture, { once: true, passive: true });
 
-    function unlockAudioOnGesture() {
-      try {
-        const AC = window.AudioContext || window.webkitAudioContext;
-        if (!AC) return;
-        const ctx = new AC();
-        if (ctx.state === 'suspended') ctx.resume();
-        const b = ctx.createBuffer(1, 1, 22050);
-        const src = ctx.createBufferSource();
-        src.buffer = b;
-        src.connect(ctx.destination);
-        src.start(0);
-      } catch (e) {}
-    }
-    document.body.addEventListener('pointerdown', unlockAudioOnGesture, { once: true, passive: true });
+      document.body.addEventListener(
+        'click',
+        async function onBodyClick() {
+          if (!document.body.classList.contains('intro-done')) return;
+          if (!audio.paused) return;
+          try {
+            await playFromUserGesture();
+          } catch (e) {}
+        },
+        { passive: true }
+      );
 
-    document.addEventListener('click', function () {
-      if (audio.paused) playFromUserGesture().then(() => {});
-    }, { once: true });
-    document.addEventListener('keydown', function () {
-      if (audio.paused) playFromUserGesture().then(() => {});
-    }, { once: true });
-
-    playBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (audio.paused) {
-        playFromUserGesture().then(() => {});
-      } else {
-        audio.pause();
-        playBtn.classList.add('paused');
-      }
-    });
-
-    volSlider.addEventListener('input', () => {
-      audio.volume = volSlider.value / 100;
-    });
-    audio.volume = volSlider.value / 100;
+      audio.addEventListener('error', function () {
+        showToast('Audio error — is m.mp3 in the same folder?', 3500);
+      });
+    })();
   </script>
 </body>
 </html>
